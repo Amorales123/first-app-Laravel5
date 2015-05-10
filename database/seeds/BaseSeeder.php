@@ -5,7 +5,17 @@ use Illuminate\Database\Seeder;
 use \Illuminate\Database\Eloquent\Collection;
 abstract class BaseSeeder extends Seeder {
     
+    protected $total =50;
     protected static $pool = array();
+    
+    /*
+     * Función la cual se ejecuta si la clase Hija no implementa
+     * el método run()
+     */
+    public function run(){
+        $this->createMultiple($this->total);
+    }
+    
     protected function createMultiple($total, array $customValues = array()){
                        
         for($i=1; $i<=$total; $i++){
