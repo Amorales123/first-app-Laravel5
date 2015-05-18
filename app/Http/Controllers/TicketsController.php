@@ -4,12 +4,15 @@ use TeachMe\Http\Requests;
 use TeachMe\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use TeachMe\Entities\Ticket;
 
 class TicketsController extends Controller {
 
     public function latest()
     {
-        return view('tickets/list');
+       $tickets = Ticket::orderBy('created_at', 'DESC')->paginate();
+        
+        return view('tickets/list',compact('tickets'));
     }
     
     public function popular()
@@ -19,17 +22,25 @@ class TicketsController extends Controller {
     
     public function open()
     {
-        return view('tickets/list');
+        $tickets = Ticket::where('status','open')->paginate();
+        return view('tickets/list',compact('tickets'));
     }
     
     public function closed()
     {
-        return view('tickets/list');
+        $tickets = Ticket::where('status','closed')->paginate();
+        return view('tickets/list',compact('tickets'));
     }
     
     public function details($id)
     {
-        return view('tickets/details');
+        /*
+         * El método findOrFail
+         * se encarga de obtener el ticket solicitado
+         * en caso de no existir retorna un error 404
+         */
+        $ticket = Ticket::findOrFail($id);
+        return view('tickets/details', compact('ticket'));
     }
 
 }
