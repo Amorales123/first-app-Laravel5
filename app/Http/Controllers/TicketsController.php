@@ -5,7 +5,7 @@ use TeachMe\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use TeachMe\Entities\Ticket;
-
+use TeachMe\Entities\TicketComments;
 class TicketsController extends Controller {
 
     public function latest()
@@ -40,6 +40,19 @@ class TicketsController extends Controller {
          * en caso de no existir retorna un error 404
          */
         $ticket = Ticket::findOrFail($id);
+        /*
+         * La Variable $comments es anulada debido a las convenciones
+         * realizadas en los modelos
+         * para mayor información consultar la documentación
+         * o bien, ver el video 2.8 del Tutorial
+         * Crea tu primera aplicación con Laravel 5
+         */
+        /*
+        $comments = TicketComments::select('ticket_comments.*','users.name')
+            ->join('users','ticket_comments.user_id','=','users.id')
+            ->where('ticket_id',$id)
+            ->get();
+        */
         return view('tickets/details', compact('ticket'));
     }
 
