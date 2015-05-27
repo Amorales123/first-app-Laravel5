@@ -41,3 +41,42 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+/*
+ * El Middleware  Bloqueará a todos los usuarios que no esten
+ * conectados
+ */
+Route::group(['middleware' => 'auth'], function (){
+ 
+    //Muestra Formulario de Solicitudes
+    Route::get('/solicitar',[
+        
+       'as'     =>  'tickets.create',
+       'uses'   =>  'TicketsController@create'
+    ]);
+    
+    //Procesa Formulario de Solicitudes
+    Route::post('/solicitar',[
+        
+       'as'     =>  'tickets.store',
+       'uses'   =>  'TicketsController@store'
+    ]);
+    
+    //Votar
+    Route::post('/votar/{id}',[
+       'as'    =>  'votes.submit',
+       'uses'  =>  'VotesController@submit'
+    ]);
+    Route::delete('/votar/{id}',[
+       'as'    =>  'votes.destroy',
+       'uses'  =>  'VotesController@destroy'
+    ]);
+    
+    
+    //Comentar
+    Route::post('/comentar/{id}',[
+       'as'     =>  'comments.comment',
+       'uses'   =>  'CommentsController@comment'
+        
+    ]);
+    
+});
