@@ -1,6 +1,6 @@
 <div data-id="25" class="well well-sm request">
     <h4 class="list-title">
-        {{ $ticket->tittle }}
+        {{ $ticket->title }}
         @include('tickets/partials/status', compact('ticket'))
     </h4>
     <p>{{-- OCULTANDO BOTONES

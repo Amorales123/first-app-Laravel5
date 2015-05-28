@@ -101,6 +101,8 @@ return array(
     |
     */
 
-    'attributes' => array(),
+    'attributes' => array(
+        'title' =>  'Título'
+    ),
 
 );

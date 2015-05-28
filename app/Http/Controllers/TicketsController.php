@@ -1,5 +1,7 @@
 <?php namespace TeachMe\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Auth\Guard;
 use TeachMe\Http\Requests;
 use TeachMe\Http\Controllers\Controller;
 
@@ -60,8 +62,31 @@ class TicketsController extends Controller {
         return view('tickets.create');
     }
     
-    public function store(Request $request)
+    public function store(Request $request, Guard $auth)
     {
-        dd($request->all());
+        /*
+         * Validando los datos utilizando el método validate
+         * si fuesen mas campos se utilizará formRequest
+         */
+        $this->validate($request,[
+            'title' =>  'required|max:120'
+        ]);
+        
+        // Método conforme al ORM
+        $ticket = $auth->user()->tickets()->create([
+           'title'  =>  $request->get('title'),
+           'status' =>  'open'
+        ]);
+        
+        
+        // Método Tradicional
+        /*
+        $ticket = new Ticket();
+        $ticket->title      = $request->get('title');
+        $ticket->status     = 'open';
+        $ticket->user_id    = $auth->user()->id;
+        $ticket->save();
+        */
+        return Redirect::route('Tickets.details', $ticket->id);
     }
 }

@@ -4,12 +4,16 @@ use TeachMe\Entities\Entity;
 
 class Ticket extends Entity {
 
+    protected $fillable = ['title','status'];
     /*
      * Convenciones de Laravel (Evita el Uso de JOIN en un query MySQL)
      */
     public function author()
     {
-        return $this->belongsTo(User::getClass());
+        /*
+         * Le indico que la relación será User_id
+         */
+        return $this->belongsTo(User::getClass(),'user_id');
     }
     
     public function comments() 

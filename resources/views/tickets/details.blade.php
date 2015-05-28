@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <h2 class="title-show">
-                {{ $ticket->tittle }}
+                {{ $ticket->title }}
                 @include('tickets/partials/status', compact('ticket'))                
             </h2>
             <p class="date-t">
@@ -15,6 +15,7 @@
                      día/mes/año horas(24 hrs):minutos(Am o Pm)
                 --}}
                 </span>{{ $ticket->created_at->format('d/m/y h:ia') }}
+                - {{$ticket->author->name }}
              </p>
             <h4 class="label label-info news">
                 {{ count($ticket->votes) }} votos            
@@ -49,7 +50,7 @@
             <h3>Nuevo Comentario</h3>
 
             {!! Form::open([
-                'route' =>  ['comments.comment',
+                'route' =>  ['comments.submit',
                     $ticket->id],
                 'method'=>  'POST'
                 ]) !!}

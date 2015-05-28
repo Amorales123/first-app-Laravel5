@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CommentsController extends Controller {
 
-    public function comment($id)
+    public function submit($id)
     {
         dd('Comentando el Ticket '. $id);
     }
